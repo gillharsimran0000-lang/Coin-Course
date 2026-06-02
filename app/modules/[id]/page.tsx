@@ -1,6 +1,6 @@
 "use client"
 
-// Frontend — Module lesson page
+// Frontend  -  Module lesson page
 
 import { useState, useEffect } from "react"
 import Link from "next/link"

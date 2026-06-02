@@ -1,6 +1,6 @@
 "use client"
 
-// Frontend — Quiz page
+// Frontend  -  Quiz page
 
 import { useState, useEffect } from "react"
 import Link from "next/link"

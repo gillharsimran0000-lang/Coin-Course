@@ -1,6 +1,6 @@
 "use client"
 
-// Frontend — Navigation bar
+// Frontend  -  Navigation bar
 
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"

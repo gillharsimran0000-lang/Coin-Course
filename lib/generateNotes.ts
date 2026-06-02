@@ -1,12 +1,12 @@
 "use client"
 
-// Data — PDF notes generator
+// Data  -  PDF notes generator
 
 import type { Module } from "./modules"
 
 function clean(text: string): string {
   return text
-    .replace(/—/g, ", ")
+    .replace(/ - /g, ", ")
     .replace(/–/g, "-")
     .replace(/‘|’/g, "'")
     .replace(/“|”/g, '"')
@@ -163,10 +163,10 @@ export async function generateNotes(mod: Module): Promise<void> {
     doc.setFont("helvetica", "normal")
     doc.setFontSize(8)
     doc.setTextColor(170, 160, 135)
-    doc.text("Coin Course   |   Free financial literacy for every age   |   cashcourse.org", ml, pageH - 22)
+    doc.text("Coin Course   |   Free financial literacy for every age   |   coin-course.com", ml, pageH - 22)
     doc.text(`${p} / ${totalPages}`, pageW - mr - 20, pageH - 22)
   }
 
   const slug = mod.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")
-  doc.save(`cash-course-module-${String(mod.id).padStart(2, "0")}-${slug}.pdf`)
+  doc.save(`coin-course-module-${String(mod.id).padStart(2, "0")}-${slug}.pdf`)
 }

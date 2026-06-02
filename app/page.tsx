@@ -1,6 +1,6 @@
 "use client"
 
-// Frontend — Homepage
+// Frontend  -  Homepage
 
 import { useEffect } from "react"
 import Link from "next/link"

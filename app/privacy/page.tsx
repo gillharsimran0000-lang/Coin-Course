@@ -1,6 +1,6 @@
 "use client"
 
-// Frontend — Privacy policy
+// Frontend  -  Privacy policy
 
 import Link from "next/link"
 import NavBar from "@/components/NavBar"
@@ -28,10 +28,10 @@ export default function PrivacyPage() {
             <h2>What we collect</h2>
             <p>When you create an account we store:</p>
             <ul>
-              <li><strong>Your email address</strong> — used to sign you in and send you the occasional product update (you can unsubscribe any time).</li>
-              <li><strong>Your display name</strong> — shown in the navigation bar. You set this when you sign up.</li>
-              <li><strong>Lesson progress</strong> — which lessons you have marked complete and your watch progress percentage for each one.</li>
-              <li><strong>Quiz scores</strong> — your score and percentage for each module quiz you complete.</li>
+              <li><strong>Your email address</strong>  -  used to sign you in and send you the occasional product update (you can unsubscribe any time).</li>
+              <li><strong>Your display name</strong>  -  shown in the navigation bar. You set this when you sign up.</li>
+              <li><strong>Lesson progress</strong>  -  which lessons you have marked complete and your watch progress percentage for each one.</li>
+              <li><strong>Quiz scores</strong>  -  your score and percentage for each module quiz you complete.</li>
             </ul>
             <p>We do not collect payment information (Coin Course is free), browsing history, location data, or any data from third parties.</p>
           </section>
@@ -57,10 +57,10 @@ export default function PrivacyPage() {
             <h2>Your rights</h2>
             <p>You can, at any time:</p>
             <ul>
-              <li><strong>Access your data</strong> — email us and we will send you everything we have on file within 30 days.</li>
-              <li><strong>Correct your data</strong> — update your name or email from your account settings.</li>
-              <li><strong>Delete your account</strong> — email us at <a href="mailto:privacy@cashcourse.org">privacy@cashcourse.org</a> and we will permanently delete your account and all associated data within 14 days.</li>
-              <li><strong>Export your data</strong> — request a copy of your progress and quiz history in JSON format.</li>
+              <li><strong>Access your data</strong>  -  email us and we will send you everything we have on file within 30 days.</li>
+              <li><strong>Correct your data</strong>  -  update your name or email from your account settings.</li>
+              <li><strong>Delete your account</strong>  -  email us at <a href="mailto:privacy@cashcourse.org">privacy@cashcourse.org</a> and we will permanently delete your account and all associated data within 14 days.</li>
+              <li><strong>Export your data</strong>  -  request a copy of your progress and quiz history in JSON format.</li>
             </ul>
             <p>If you are in the European Economic Area (EEA) or United Kingdom, you also have rights under GDPR including the right to object to processing and the right to lodge a complaint with your local supervisory authority.</p>
           </section>
