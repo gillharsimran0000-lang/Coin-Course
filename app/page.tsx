@@ -212,7 +212,7 @@ export default function CashCoursePage() {
             </Link>
             <Link href="/modules/4" className="module m-4">
               <div className="module-num">04 / 08</div>
-              <div className="module-glyph">⌂</div>
+              <div className="module-glyph">⌂︎</div>
               <h3>Banking &amp; Income</h3>
               <p>Checking versus savings, direct deposit, taxes on your paycheck, and how to actually read a real bank statement.</p>
               <div className="module-foot">
@@ -224,7 +224,7 @@ export default function CashCoursePage() {
           <div className="modules-row">
             <Link href="/modules/5" className="module m-5">
               <div className="module-num">05 / 08</div>
-              <div className="module-glyph">↗</div>
+              <div className="module-glyph">↗︎</div>
               <h3>Investing</h3>
               <p>Compound growth, index funds, risk versus return. Explained with napkin math, not jargon and not hot takes.</p>
               <div className="module-foot">
@@ -234,7 +234,7 @@ export default function CashCoursePage() {
             </Link>
             <Link href="/modules/6" className="module m-6">
               <div className="module-num">06 / 08</div>
-              <div className="module-glyph">◊</div>
+              <div className="module-glyph">◊︎</div>
               <h3>Insurance</h3>
               <p>Health, auto, renters, life. What you actually need at each life stage, and what is a costly upsell in disguise.</p>
               <div className="module-foot">
@@ -254,7 +254,7 @@ export default function CashCoursePage() {
             </Link>
             <Link href="/modules/8" className="module m-8">
               <div className="module-num">08 / 08</div>
-              <div className="module-glyph">∞</div>
+              <div className="module-glyph">∞︎</div>
               <h3>Long-Term Wealth</h3>
               <p>Retirement accounts, real estate, building generational stability. The endgame, demystified and made boring on purpose.</p>
               <div className="module-foot">
