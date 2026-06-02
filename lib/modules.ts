@@ -386,7 +386,7 @@ export const modules: Module[] = [
   {
     id: 5,
     title: "Investing",
-    glyph: "↗",
+    glyph: "↗︎",
     colorVar: "var(--m5)",
     colorHex: "#b48cff",
     duration: 32,
