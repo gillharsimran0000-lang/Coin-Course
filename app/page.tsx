@@ -460,6 +460,44 @@ export default function CashCoursePage() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section className="section" id="faq">
+        <div className="section-head reveal">
+          <div>
+            <div className="kicker">Questions</div>
+            <h2>Got questions?<br /><span className="ital-gold">We have answers.</span></h2>
+          </div>
+          <p className="section-sub">Everything you need to know before you start. If something is still unclear, reach out at <a href="mailto:hello@coin-course.com" style={{ color: 'var(--gold)', textDecoration: 'none' }}>hello@coin-course.com</a>.</p>
+        </div>
+
+        <div className="faq-list reveal">
+          <div className="faq-item">
+            <div className="faq-q">Is Coin Course really free?</div>
+            <div className="faq-a">Yes, completely. No credit card, no free trial, no upsell. Every module, quiz, and downloadable note is free forever. We are funded so you do not have to be.</div>
+          </div>
+          <div className="faq-item">
+            <div className="faq-q">Do I need to create an account?</div>
+            <div className="faq-a">You can browse and read everything without an account. Sign up only if you want to track your progress, save quiz scores, and pick up where you left off across devices.</div>
+          </div>
+          <div className="faq-item">
+            <div className="faq-q">How long does the full course take?</div>
+            <div className="faq-a">Each of the eight modules takes around 25 minutes, so the whole curriculum is roughly 3 to 4 hours. Most people finish in a weekend. You can also do one module at a time at your own pace.</div>
+          </div>
+          <div className="faq-item">
+            <div className="faq-q">What age group is this designed for?</div>
+            <div className="faq-a">Anyone from 10 to 100. The language is plain, the examples are real, and we do not dumb things down. A middle schooler and a 50-year-old can both get genuine value from the same module.</div>
+          </div>
+          <div className="faq-item">
+            <div className="faq-q">Do I need to complete the modules in order?</div>
+            <div className="faq-a">The modules are designed to build on each other, so going in order is recommended. That said, later modules unlock as you complete earlier ones, so you can jump ahead once you have covered the basics.</div>
+          </div>
+          <div className="faq-item">
+            <div className="faq-q">Can I download the lesson notes?</div>
+            <div className="faq-a">Yes. Every module has a one-page PDF summary you can download, print, or save to your phone. It is yours to keep with no account required.</div>
+          </div>
+        </div>
+      </section>
+
       {/* FOOTER */}
       <footer>
         <div className="footer-inner">
@@ -468,7 +506,7 @@ export default function CashCoursePage() {
               <div className="coin">$</div>
               Coin Course
             </div>
-            <p className="footer-tag">Free financial literacy for every age. Free financial literacy for every age.</p>
+            <p className="footer-tag">Free financial literacy for every age.</p>
           </div>
           <div>
             <h5>Learn</h5>
@@ -480,20 +518,10 @@ export default function CashCoursePage() {
             </div>
           </div>
           <div>
-            <h5>About</h5>
-            <div className="footer-links">
-              <a href="#">Our mission</a>
-              <a href="#">Curriculum board</a>
-              <a href="#">Donate</a>
-              <a href="#">Press</a>
-            </div>
-          </div>
-          <div>
             <h5>Help</h5>
             <div className="footer-links">
-              <a href="#">FAQ</a>
-              <a href="mailto:privacy@cashcourse.org">Contact</a>
-              <a href="#">Accessibility</a>
+              <Link href="/#faq">FAQ</Link>
+              <a href="mailto:hello@coin-course.com">Contact</a>
               <Link href="/privacy">Privacy</Link>
             </div>
           </div>

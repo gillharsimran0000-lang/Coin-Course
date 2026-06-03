@@ -330,20 +330,10 @@ export default function QuizPage({ params }: { params: { id: string } }) {
             </div>
           </div>
           <div>
-            <h5>About</h5>
-            <div className="footer-links">
-              <a href="#">Our mission</a>
-              <a href="#">Curriculum board</a>
-              <a href="#">Donate</a>
-              <a href="#">Press</a>
-            </div>
-          </div>
-          <div>
             <h5>Help</h5>
             <div className="footer-links">
-              <a href="#">FAQ</a>
-              <a href="mailto:privacy@cashcourse.org">Contact</a>
-              <a href="#">Accessibility</a>
+              <Link href="/#faq">FAQ</Link>
+              <a href="mailto:hello@coin-course.com">Contact</a>
               <Link href="/privacy">Privacy</Link>
             </div>
           </div>
