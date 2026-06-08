@@ -2,11 +2,22 @@
 
 // Frontend  -  Homepage
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import NavBar from "@/components/NavBar"
+import { getReviews, submitReview, type Review } from "@/lib/reviews"
 
 export default function CashCoursePage() {
+  const [reviews, setReviews] = useState<Review[]>([])
+  const [showForm, setShowForm] = useState(false)
+  const [formName, setFormName] = useState("")
+  const [formRating, setFormRating] = useState(0)
+  const [hoveredStar, setHoveredStar] = useState(0)
+  const [formBody, setFormBody] = useState("")
+  const [formSubmitting, setFormSubmitting] = useState(false)
+  const [formDone, setFormDone] = useState(false)
+  const [formError, setFormError] = useState("")
+
   useEffect(() => {
     const io = new IntersectionObserver(
       (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible") }),
@@ -15,6 +26,25 @@ export default function CashCoursePage() {
     document.querySelectorAll(".reveal, .modules").forEach(el => io.observe(el))
     return () => io.disconnect()
   }, [])
+
+  useEffect(() => {
+    getReviews().then(setReviews)
+  }, [])
+
+  async function handleReviewSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!formRating || !formName.trim() || !formBody.trim()) return
+    setFormSubmitting(true)
+    setFormError("")
+    const { error } = await submitReview(formName.trim(), formRating, formBody.trim())
+    setFormSubmitting(false)
+    if (error) {
+      setFormError("Something went wrong. Please try again.")
+    } else {
+      setFormDone(true)
+      if (formRating >= 4) getReviews().then(setReviews)
+    }
+  }
 
   return (
     <>
@@ -407,6 +437,101 @@ export default function CashCoursePage() {
           </div>
         </div>
 
+      </section>
+
+      {/* REVIEWS */}
+      <section className="section" id="reviews">
+        <div className="section-head reveal">
+          <div>
+            <div className="kicker">From our learners</div>
+            <h2>Real people.<br /><span className="ital-gold">Real results.</span></h2>
+          </div>
+          <p className="section-sub">Hear from people who have been through the modules. Want to share your experience? Leave a review below.</p>
+        </div>
+
+        {reviews.length > 0 && (
+          <div className="reviews-grid reveal">
+            {reviews.map(r => (
+              <div key={r.id} className="review-card">
+                <div className="review-stars">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <span key={i} className={i < r.rating ? "star filled" : "star"}>★</span>
+                  ))}
+                </div>
+                <p className="review-body">{r.body}</p>
+                <div className="review-name">{r.name}</div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="reviews-submit reveal">
+          {formDone ? (
+            <div className="review-thanks">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <circle cx="14" cy="14" r="13" stroke="var(--gold)" strokeWidth="1.5" />
+                <path d="M8 14 L12 18 L20 10" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <p>Thanks for your review! We appreciate you taking the time.</p>
+            </div>
+          ) : !showForm ? (
+            <button className="btn" onClick={() => setShowForm(true)}>
+              Leave a review
+            </button>
+          ) : (
+            <form className="review-form" onSubmit={handleReviewSubmit}>
+              <div className="rf-stars">
+                {[1, 2, 3, 4, 5].map(n => (
+                  <button
+                    key={n}
+                    type="button"
+                    className={(hoveredStar || formRating) >= n ? "rf-star active" : "rf-star"}
+                    onMouseEnter={() => setHoveredStar(n)}
+                    onMouseLeave={() => setHoveredStar(0)}
+                    onClick={() => setFormRating(n)}
+                    aria-label={`${n} star`}
+                  >★</button>
+                ))}
+                <span className="rf-star-label">
+                  {(hoveredStar || formRating) === 1 && "Poor"}
+                  {(hoveredStar || formRating) === 2 && "Fair"}
+                  {(hoveredStar || formRating) === 3 && "Good"}
+                  {(hoveredStar || formRating) === 4 && "Great"}
+                  {(hoveredStar || formRating) === 5 && "Excellent"}
+                </span>
+              </div>
+              <input
+                className="rf-input"
+                type="text"
+                placeholder="Your name"
+                value={formName}
+                onChange={e => setFormName(e.target.value)}
+                required
+                maxLength={60}
+              />
+              <textarea
+                className="rf-input rf-textarea"
+                placeholder="What did you think of Coin Course?"
+                value={formBody}
+                onChange={e => setFormBody(e.target.value)}
+                required
+                maxLength={400}
+                rows={4}
+              />
+              {formError && <p className="rf-error">{formError}</p>}
+              <div className="rf-actions">
+                <button type="button" className="btn" onClick={() => setShowForm(false)}>Cancel</button>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={formSubmitting || !formRating}
+                >
+                  {formSubmitting ? "Submitting..." : "Submit review"}
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
       </section>
 
       {/* CTA */}
