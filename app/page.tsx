@@ -450,7 +450,7 @@ export default function CashCoursePage() {
         </div>
 
         {reviews.length > 0 && (
-          <div className="reviews-grid reveal">
+          <div className="reviews-grid">
             {reviews.map(r => (
               <div key={r.id} className="review-card">
                 <div className="review-stars">
