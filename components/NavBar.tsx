@@ -33,7 +33,7 @@ export default function NavBar() {
         <Link href="/#modules">Modules</Link>
         <Link href="/#how">How it works</Link>
         <Link href="/#audience">For learners</Link>
-        <a href="#">Resources</a>
+        <Link href="/resources">Resources</Link>
       </div>
       <div className="nav-cta">
         {user ? (
