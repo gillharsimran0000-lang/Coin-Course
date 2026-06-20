@@ -30,9 +30,9 @@ export default function NavBar() {
         Coin Course
       </Link>
       <div className="nav-links">
-        <Link href="/#modules">Modules</Link>
-        <Link href="/#how">How it works</Link>
-        <Link href="/#audience">For learners</Link>
+        <Link href="/modules">Modules</Link>
+        <Link href="/how-it-works">How it works</Link>
+        <Link href="/for-learners">For learners</Link>
         <Link href="/resources">Resources</Link>
       </div>
       <div className="nav-cta">
