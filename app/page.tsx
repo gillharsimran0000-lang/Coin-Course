@@ -340,7 +340,6 @@ export default function CashCoursePage() {
 
           <div className="preview">
             <div className="preview-video">
-              <div className="preview-scan" />
               <span className="preview-tag">
                 <span className="live-dot" />Now playing
               </span>

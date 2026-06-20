@@ -612,8 +612,7 @@ body::before {
   align-items: center;
   gap: 6px;
 }
-.preview-tag .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--bg); animation: pulse 1.4s ease-out infinite; }
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.preview-tag .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--bg); }
 .preview-body { padding: 28px 28px 24px 28px; border-top: 1px solid var(--line-2); }
 .preview-body h3 {
   font-family: var(--serif);
@@ -874,21 +873,8 @@ footer { border-top: 1px solid var(--line); padding: 64px 36px 36px; margin-top:
 /* Bricolage Grotesque for kickers + module numbers */
 .kicker, .module-num, .eyebrow { font-family: var(--display) !important; }
 
-/* Shimmer sweep on primary button */
+/* Buttons */
 .btn { position: relative; overflow: hidden; }
-.btn-primary::after {
-  content: "";
-  position: absolute;
-  top: 0; left: -80%; width: 55%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
-  animation: btnShimmer 3.8s ease-in-out infinite 1s;
-  pointer-events: none;
-  border-radius: inherit;
-}
-@keyframes btnShimmer {
-  0%, 55%, 100% { left: -80%; }
-  75% { left: 130%; }
-}
 
 /* Module card stagger reveal */
 .module {
@@ -906,13 +892,6 @@ footer { border-top: 1px solid var(--line); padding: 64px 36px 36px; margin-top:
 .modules-row:last-child .module:nth-child(3) { transition-delay: 510ms; }
 .modules-row:last-child .module:nth-child(4) { transition-delay: 595ms; }
 
-/* Module glyph glow pulse */
-@keyframes glowPulseGold { 0%, 100% { box-shadow: 0 0 32px rgba(255,206,58,0.25); } 50% { box-shadow: 0 0 64px rgba(255,206,58,0.55), 0 0 24px rgba(255,206,58,0.3); } }
-@keyframes glowPulseMint  { 0%, 100% { box-shadow: 0 0 32px rgba(109,212,151,0.2); } 50% { box-shadow: 0 0 56px rgba(109,212,151,0.45); } }
-@keyframes glowPulseCoral { 0%, 100% { box-shadow: 0 0 32px rgba(255,106,78,0.2); } 50% { box-shadow: 0 0 56px rgba(255,106,78,0.45); } }
-.m-1 .module-glyph { animation: glowPulseGold 3.2s ease-in-out infinite; }
-.m-2 .module-glyph { animation: glowPulseMint  3.8s ease-in-out infinite 0.6s; }
-.m-3 .module-glyph { animation: glowPulseCoral 4.1s ease-in-out infinite 1.2s; }
 
 /* Scroll reveal for sections */
 .reveal {
@@ -922,18 +901,6 @@ footer { border-top: 1px solid var(--line); padding: 64px 36px 36px; margin-top:
 }
 .reveal.visible { opacity: 1; transform: none; }
 
-/* Scanning line over preview video */
-.preview-scan {
-  position: absolute;
-  left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 10%, var(--m1) 50%, transparent 90%);
-  opacity: 0.35;
-  animation: scanMove 5s linear infinite;
-  z-index: 3;
-  pointer-events: none;
-}
-@keyframes scanMove { from { top: 0%; } to { top: 100%; } }
 
 /* ── MODULE PAGES ── */
 
@@ -2553,20 +2520,21 @@ footer { border-top: 1px solid var(--line); padding: 64px 36px 36px; margin-top:
   justify-content: center;
   gap: 10px;
   width: 100%;
-  padding: 12px 20px;
-  background: var(--bg-2);
-  border: 1.5px solid var(--line-2);
-  color: var(--ink);
+  padding: 11px 20px;
+  background: #fff;
+  border: 1.5px solid #dadce0;
+  border-radius: 8px;
+  color: #3c4043;
   font-family: var(--sans);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 160ms ease, border-color 160ms ease;
+  transition: background 160ms ease, box-shadow 160ms ease;
   margin-bottom: 4px;
 }
 .auth-google-btn:hover:not(:disabled) {
-  background: var(--bg-3);
-  border-color: var(--ink-3);
+  background: #f8f9fa;
+  box-shadow: 0 1px 3px rgba(60,64,67,0.2);
 }
 .auth-google-btn:disabled { opacity: 0.6; cursor: default; }
 
