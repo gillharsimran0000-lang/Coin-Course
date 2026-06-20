@@ -343,11 +343,11 @@ export default function CashCoursePage() {
               <span className="preview-tag">
                 <span className="live-dot" />Now playing
               </span>
-              <button className="play-btn">
+              <Link href="/modules/1" className="play-btn">
                 <svg width="24" height="24" viewBox="0 0 24 24" style={{ marginLeft: '4px' }}>
                   <path d="M6 4 L20 12 L6 20 Z" fill="#0c0a07" />
                 </svg>
-              </button>
+              </Link>
               <span className="preview-time">12:34 / 22:08</span>
             </div>
             <div className="preview-body">

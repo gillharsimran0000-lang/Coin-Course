@@ -1,3 +1,6 @@
+"use client"
+
+import { useEffect } from "react"
 import Link from "next/link"
 import NavBar from "@/components/NavBar"
 
@@ -13,6 +16,15 @@ const MODULES = [
 ]
 
 export default function ModulesPage() {
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible") }),
+      { threshold: 0.05 }
+    )
+    document.querySelectorAll(".modules").forEach(el => io.observe(el))
+    return () => io.disconnect()
+  }, [])
+
   return (
     <div style={{ minHeight: "100vh" }}>
       <NavBar />
