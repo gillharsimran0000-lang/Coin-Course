@@ -8,7 +8,22 @@
       "Bash(git commit *)",
       "Bash(git remote *)",
       "Bash(git push *)",
-      "Bash(gh auth *)"
+      "Bash(gh auth *)",
+      "Bash(sed -i '' 's/privacy@cashcourse\\\\.org/hello@coin-course.com/g' /Users/harsimrangill/Documents/Test-Start/app/signin/page.tsx /Users/harsimrangill/Documents/Test-Start/app/privacy/page.tsx)",
+      "Bash(sed -i '' 's/privacy@cashcourse\\\\.org/hello@coin-course.com/g' '/Users/harsimrangill/Documents/Test-Start/app/modules/\\\\[id\\\\]/page.tsx' '/Users/harsimrangill/Documents/Test-Start/app/modules/\\\\[id\\\\]/quiz/page.tsx')",
+      "Bash(npm i *)",
+      "Bash(lsof -ti:3000)",
+      "Skill(run)",
+      "Bash(npm run *)",
+      "Bash(echo \"PID: $!\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/signin)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/resources)",
+      "Bash(curl -s http://localhost:3000/signin)",
+      "Bash(curl -s http://localhost:3000/modules)",
+      "Bash(curl -s \"https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=80Pp66Ye5Vk&format=json\")",
+      "Bash(python3 -m json.tool)",
+      "Bash(xargs sed -i '' 's/Made for learners 10 to 100/Harsimran Gill \\\\& Ashwin Sivakumar/g')"
     ]
   }
 }

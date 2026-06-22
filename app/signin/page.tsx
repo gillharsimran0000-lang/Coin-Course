@@ -295,7 +295,7 @@ function AuthFooter() {
       </div>
       <div className="footer-bottom">
         <span>2026 Coin Course. A free financial literacy project</span>
-        <span>Made for learners 10 to 100</span>
+        <span>Harsimran Gill & Ashwin Sivakumar</span>
       </div>
     </footer>
   )
