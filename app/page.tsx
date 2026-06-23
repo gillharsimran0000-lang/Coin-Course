@@ -75,7 +75,7 @@ export default function CashCoursePage() {
         <svg className="float-coin fc-1" width="68" height="68" viewBox="0 0 68 68">
           <circle cx="34" cy="34" r="28" fill="#ffce3a" stroke="#0c0a07" strokeWidth="2" />
           <circle cx="34" cy="34" r="22" fill="none" stroke="#0c0a07" strokeWidth="1" strokeDasharray="3 4" />
-          <text x="34" y="44" textAnchor="middle" fontFamily="Instrument Serif, serif" fontStyle="italic" fontWeight={600} fontSize="28" fill="#0c0a07">$</text>
+          <text x="34" y="44" textAnchor="middle" fontFamily="Fraunces, serif" fontStyle="italic" fontWeight={600} fontSize="28" fill="#0c0a07">$</text>
         </svg>
         <svg className="float-coin fc-2" width="40" height="40" viewBox="0 0 40 40">
           <path d="M20 4 L23 16 L35 16 L25 23 L29 35 L20 27 L11 35 L15 23 L5 16 L17 16 Z" fill="#b48cff" stroke="#0c0a07" strokeWidth="1.5" />
@@ -120,7 +120,7 @@ export default function CashCoursePage() {
             <div className="num">01</div>
             <div className="hero-art-glyph" style={{ background: 'var(--m1)' }}>
               <svg width="32" height="32" viewBox="0 0 32 32">
-                <text x="16" y="24" textAnchor="middle" fontFamily="Instrument Serif" fontStyle="italic" fontWeight={500} fontSize="26" fill="#0c0a07">$</text>
+                <text x="16" y="24" textAnchor="middle" fontFamily="Fraunces" fontStyle="italic" fontWeight={500} fontSize="26" fill="#0c0a07">$</text>
               </svg>
             </div>
             <div className="name">Money Basics</div>
@@ -190,7 +190,7 @@ export default function CashCoursePage() {
             <div className="hero-art-glyph" style={{ background: 'var(--bg)', border: '1.5px solid var(--m1)' }}>
               <svg width="36" height="36" viewBox="0 0 36 36">
                 <circle cx="18" cy="18" r="10" fill="none" stroke="#ffce3a" strokeWidth="2.4" />
-                <text x="18" y="23" textAnchor="middle" fontFamily="Instrument Serif" fontWeight={500} fontStyle="italic" fontSize="14" fill="#ffce3a">∞</text>
+                <text x="18" y="23" textAnchor="middle" fontFamily="Fraunces" fontWeight={500} fontStyle="italic" fontSize="14" fill="#ffce3a">∞</text>
               </svg>
             </div>
             <div className="name">Long-Term</div>
@@ -555,26 +555,26 @@ export default function CashCoursePage() {
                 <rect x="68" y="190" width="184" height="26" fill="#0c0a07" />
                 <ellipse cx="160" cy="190" rx="92" ry="20" fill="#ffce3a" stroke="#0c0a07" strokeWidth="2.5" />
                 <ellipse cx="160" cy="190" rx="80" ry="14" fill="none" stroke="#0c0a07" strokeWidth="1" strokeDasharray="3 4" />
-                <text x="160" y="198" textAnchor="middle" fontFamily="Instrument Serif, serif" fontStyle="italic" fontWeight={600} fontSize="22" fill="#0c0a07">$</text>
+                <text x="160" y="198" textAnchor="middle" fontFamily="Fraunces, serif" fontStyle="italic" fontWeight={600} fontSize="22" fill="#0c0a07">$</text>
               </g>
               <g>
                 <ellipse cx="160" cy="166" rx="78" ry="17" fill="#0c0a07" />
                 <rect x="82" y="142" width="156" height="24" fill="#0c0a07" />
                 <ellipse cx="160" cy="142" rx="78" ry="17" fill="#ffce3a" stroke="#0c0a07" strokeWidth="2.5" />
                 <ellipse cx="160" cy="142" rx="68" ry="11" fill="none" stroke="#0c0a07" strokeWidth="1" strokeDasharray="3 4" />
-                <text x="160" y="149" textAnchor="middle" fontFamily="Instrument Serif, serif" fontStyle="italic" fontWeight={600} fontSize="20" fill="#0c0a07">$</text>
+                <text x="160" y="149" textAnchor="middle" fontFamily="Fraunces, serif" fontStyle="italic" fontWeight={600} fontSize="20" fill="#0c0a07">$</text>
               </g>
               <g>
                 <ellipse cx="160" cy="120" rx="64" ry="14" fill="#0c0a07" />
                 <rect x="96" y="98" width="128" height="22" fill="#0c0a07" />
                 <ellipse cx="160" cy="98" rx="64" ry="14" fill="#ffce3a" stroke="#0c0a07" strokeWidth="2.5" />
                 <ellipse cx="160" cy="98" rx="55" ry="9" fill="none" stroke="#0c0a07" strokeWidth="1" strokeDasharray="3 4" />
-                <text x="160" y="104" textAnchor="middle" fontFamily="Instrument Serif, serif" fontStyle="italic" fontWeight={600} fontSize="18" fill="#0c0a07">$</text>
+                <text x="160" y="104" textAnchor="middle" fontFamily="Fraunces, serif" fontStyle="italic" fontWeight={600} fontSize="18" fill="#0c0a07">$</text>
               </g>
               <g transform="translate(248, 56) rotate(22)">
                 <circle cx="0" cy="0" r="26" fill="#ffce3a" stroke="#0c0a07" strokeWidth="2.5" />
                 <circle cx="0" cy="0" r="20" fill="none" stroke="#0c0a07" strokeWidth="1" strokeDasharray="3 4" />
-                <text x="0" y="8" textAnchor="middle" fontFamily="Instrument Serif, serif" fontStyle="italic" fontWeight={600} fontSize="22" fill="#0c0a07">$</text>
+                <text x="0" y="8" textAnchor="middle" fontFamily="Fraunces, serif" fontStyle="italic" fontWeight={600} fontSize="22" fill="#0c0a07">$</text>
               </g>
               <path d="M50 50 L52 44 L54 50 L60 52 L54 54 L52 60 L50 54 L44 52 Z" fill="#0c0a07" />
               <path d="M280 156 L282 150 L284 156 L290 158 L284 160 L282 166 L280 160 L274 158 Z" fill="#0c0a07" />

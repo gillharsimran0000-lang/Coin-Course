@@ -83,9 +83,9 @@
   --m7: #50d8c4;
   --m8: #ffce3a;
 
-  --serif: "Instrument Serif", "Iowan Old Style", "Times New Roman", serif;
-  --sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --mono: "Courier Prime", "Courier New", monospace;
+  --serif: "Fraunces", "Iowan Old Style", "Times New Roman", serif;
+  --sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mono: "Space Mono", "Courier New", monospace;
 }
 
 html, body {
@@ -867,10 +867,10 @@ footer { border-top: 1px solid var(--line); padding: 64px 36px 36px; margin-top:
 /* ── ANIMATION ENHANCEMENTS ── */
 
 :root {
-  --display: "Bricolage Grotesque", var(--sans);
+  --display: "Space Grotesk", var(--sans);
 }
 
-/* Bricolage Grotesque for kickers + module numbers */
+/* Space Grotesk for kickers + module numbers */
 .kicker, .module-num, .eyebrow { font-family: var(--display) !important; }
 
 /* Buttons */
@@ -2467,7 +2467,7 @@ footer { border-top: 1px solid var(--line); padding: 64px 36px 36px; margin-top:
   border-bottom: 1px solid rgba(200, 192, 168, 0.18);
 }
 .faq-q {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Fraunces', serif;
   font-size: 18px;
   color: var(--fg);
   margin-bottom: 10px;
