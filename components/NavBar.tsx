@@ -34,6 +34,7 @@ export default function NavBar() {
         <Link href="/how-it-works">How it works</Link>
         <Link href="/for-learners">For learners</Link>
         <Link href="/resources">Resources</Link>
+        <Link href="/game">Game</Link>
       </div>
       <div className="nav-cta">
         {user ? (

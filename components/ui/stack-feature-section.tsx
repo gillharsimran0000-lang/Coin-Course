@@ -48,7 +48,7 @@ export default function FeatureSection() {
         </div>
       </div>
 
-      {/* Right: orbit — center hub sits at the right half, clipped by overflow-hidden */}
+      {/* Right: orbit - center hub sits at the right half, clipped by overflow-hidden */}
       <div
         className="absolute"
         style={{ top: "50%", left: "72%", transform: "translate(-50%, -50%)" }}

@@ -5,13 +5,13 @@ import { useState } from "react"
 import NavBar from "@/components/NavBar"
 
 const GLOSSARY = [
-  { term: "Compound Interest", def: "Interest earned on both your original deposit and the interest already accumulated. The reason starting early matters so much — time multiplies everything." },
+  { term: "Compound Interest", def: "Interest earned on both your original deposit and the interest already accumulated. The reason starting early matters so much: time multiplies everything." },
   { term: "Net Worth", def: "What you own minus what you owe. Assets (cash, investments, property) minus liabilities (loans, credit card debt). The real number that tracks your financial progress." },
   { term: "Emergency Fund", def: "Three to six months of essential expenses kept in a liquid savings account. The buffer that keeps one bad month from becoming a financial crisis." },
   { term: "Credit Score", def: "A number from 300 to 850 that represents how reliably you repay debt. Lenders, landlords, and sometimes employers use it. Payment history is the biggest factor." },
   { term: "APR", def: "Annual Percentage Rate. The true yearly cost of borrowing money, including fees. Higher APR on a credit card balance means more money out of your pocket each month." },
   { term: "Index Fund", def: "A fund that tracks a market index like the S&P 500 instead of trying to beat it. Lower fees and historically better long-term returns than most actively managed funds." },
-  { term: "401(k)", def: "An employer-sponsored retirement account where contributions come out of your paycheck pre-tax. Many employers match a percentage — that match is free money, take it." },
+  { term: "401(k)", def: "An employer-sponsored retirement account where contributions come out of your paycheck pre-tax. Many employers match a percentage. That match is free money, so take it." },
   { term: "Roth IRA", def: "A retirement account you fund with after-tax money. Withdrawals in retirement are tax-free. Better than a traditional IRA if you expect to be in a higher tax bracket later." },
   { term: "Inflation", def: "The rate at which prices rise over time. At 3% annual inflation, $100 today buys what $97 buys next year. Why keeping cash under a mattress loses value." },
   { term: "Liquidity", def: "How quickly you can convert an asset to cash without losing value. Your checking account is highly liquid. A house is not." },
@@ -21,14 +21,14 @@ const GLOSSARY = [
 
 const TIPS = [
   { cat: "Saving", color: "var(--m2)", tips: [
-    "Pay yourself first — move money to savings the day you get paid, before you spend anything.",
+    "Pay yourself first: move money to savings the day you get paid, before you spend anything.",
     "Automate transfers so saving requires no willpower.",
     "Save raises and bonuses before you adjust your lifestyle to them.",
     "Keep your emergency fund in a high-yield savings account, not a checking account.",
   ]},
   { cat: "Credit", color: "var(--m3)", tips: [
     "Pay your full statement balance every month. Carrying a balance costs you in interest.",
-    "Keep your credit utilization below 30% — below 10% is even better.",
+    "Keep your credit utilization below 30%. Below 10% is even better.",
     "The age of your oldest account matters. Do not close old cards unless they have high fees.",
     "Check your credit report at annualcreditreport.com once a year for errors.",
   ]},
@@ -64,7 +64,7 @@ const CHECKLISTS = [
       "Understand APR and what it costs to carry a balance",
       "Know your credit limit and plan to stay under 30% utilization",
       "Set up autopay for at least the minimum (aim for the full balance)",
-      "Read the rewards structure — pick a card that matches your spending",
+      "Read the rewards structure and pick a card that matches your spending",
       "Understand the annual fee and whether the benefits justify it",
       "Check your credit report before applying so there are no surprises",
     ],
@@ -146,7 +146,7 @@ export default function ResourcesPage() {
         <div className="kicker">Resources</div>
         <h1>The toolkit.<br /><span className="ital-color">All in one place.</span></h1>
         <p className="resources-sub">
-          Key terms, quick tips, checklists, and a budget calculator — everything from the modules, condensed for quick reference.
+          Key terms, quick tips, checklists, and a budget calculator: everything from the modules, condensed for quick reference.
         </p>
       </section>
 

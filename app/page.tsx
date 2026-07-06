@@ -5,6 +5,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import NavBar from "@/components/NavBar"
+import TowerIcon from "./game/TowerIcon"
 import { getReviews, submitReview, type Review } from "@/lib/reviews"
 
 export default function CashCoursePage() {
@@ -54,14 +55,14 @@ export default function CashCoursePage() {
           <span><span className="dot">●</span> Free forever</span>
           <span>8 modules</span>
           <span>Self-paced</span>
-          <span>Ages 10 to 100</span>
+          <span>Ages 7 to 100</span>
           <span><span className="dot">●</span> A free financial literacy project</span>
           <span>No credit card</span>
           <span>Video · Quiz · Notes · Progress</span>
           <span><span className="dot">●</span> Free forever</span>
           <span>8 modules</span>
           <span>Self-paced</span>
-          <span>Ages 10 to 100</span>
+          <span>Ages 7 to 100</span>
           <span><span className="dot">●</span> A free financial literacy project</span>
           <span>No credit card</span>
           <span>Video · Quiz · Notes · Progress</span>
@@ -296,6 +297,23 @@ export default function CashCoursePage() {
         </div>
       </section>
 
+      {/* GAME PROMO */}
+      <section className="section" id="game">
+        <Link href="/game" className="game-promo reveal">
+          <div className="game-promo-icons" aria-hidden="true">
+            <span><TowerIcon type="emergencyFund" size={44} /></span>
+            <span><TowerIcon type="insurance" size={56} /></span>
+            <span><TowerIcon type="investment" size={44} /></span>
+          </div>
+          <div className="game-promo-body">
+            <div className="kicker">New · Playable lesson</div>
+            <h2>Money <span className="ital-gold">Defense</span></h2>
+            <p>Recruit the Piggy Bank Pal, Insurance Turtle, and Investing Iguana to defend your vault from Debt Bats, Scam Rats, and Gamble Goblins, and learn how money works while you play.</p>
+          </div>
+          <span className="game-promo-cta">Play free →</span>
+        </Link>
+      </section>
+
       {/* HOW IT WORKS */}
       <section className="section" id="how">
         <div className="section-head reveal">
@@ -373,12 +391,12 @@ export default function CashCoursePage() {
             <div className="kicker">Who it&apos;s for</div>
             <h2>One platform.<br /><span className="ital-gold">Every life stage.</span></h2>
           </div>
-          <p className="section-sub">We do not dumb things down. We just explain them well. The same modules work whether you are eleven or fifty-one. Different starting points, same destination.</p>
+          <p className="section-sub">We do not dumb things down. We just explain them well. The same modules work whether you are seven or fifty-one. Different starting points, same destination.</p>
         </div>
 
         <div className="learners reveal">
           <div className="learner">
-            <span className="learner-age">Ages 10 to 14</span>
+            <span className="learner-age">Ages 7 to 14</span>
             <svg className="learner-portrait" viewBox="0 0 88 88" fill="none">
               <rect width="88" height="88" rx="44" fill="#ffce3a" />
               <circle cx="44" cy="38" r="13" fill="#0c0a07" />

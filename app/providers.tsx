@@ -1,6 +1,6 @@
 "use client"
 
-// Backend — Auth state provider (session, user, sign out)
+// Backend - Auth state provider (session, user, sign out)
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import type { User as SupabaseUser, Session } from "@supabase/supabase-js"

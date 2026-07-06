@@ -3,7 +3,7 @@ import NavBar from "@/components/NavBar"
 
 const GROUPS = [
   {
-    age: "Ages 10 to 14",
+    age: "Ages 7 to 14",
     fill: "#ffce3a",
     eyeFill: "#ffce3a",
     mouthPath: "M40 42 Q 44 45, 48 42",
@@ -37,7 +37,7 @@ const GROUPS = [
     mouthPath: "M40 43 Q 44 41, 48 43",
     title: "Adults",
     titleItal: "catching up",
-    body: "It is never too late. Investing, insurance, retirement — the topics nobody actually taught you, in plain language.",
+    body: "It is never too late. Investing, insurance, retirement. The topics nobody actually taught you, in plain language.",
     modules: [
       { label: "Investing", color: "var(--m5)" },
       { label: "Insurance", color: "var(--m6)" },
@@ -54,7 +54,7 @@ export default function ForLearnersPage() {
       <section className="fl-hero">
         <div className="kicker">Who it&apos;s for</div>
         <h1>One platform.<br /><span className="ital-gold">Every life stage.</span></h1>
-        <p className="fl-sub">We do not dumb things down. We just explain them well. The same modules work whether you are eleven or fifty-one.</p>
+        <p className="fl-sub">We do not dumb things down. We just explain them well. The same modules work whether you are seven or fifty-one.</p>
       </section>
 
       <div className="fl-body">

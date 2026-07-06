@@ -1,4 +1,4 @@
-// Backend — Supabase client (database connection)
+// Backend - Supabase client (database connection)
 
 import { createClient } from "@supabase/supabase-js"
 

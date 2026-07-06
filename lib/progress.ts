@@ -1,4 +1,4 @@
-// Backend — Lesson progress and quiz score database functions
+// Backend - Lesson progress and quiz score database functions
 
 import { supabase } from "./supabase"
 import { modules } from "./modules"
