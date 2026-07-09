@@ -214,16 +214,28 @@ export default function ModulePage({ params }: { params: { id: string } }) {
             {/* VIDEO PLAYER */}
             <div className="lesson-video-card">
               <div className="lesson-video-player lesson-video-embed">
-                <iframe
-                  key={activeLesson.id}
-                  src={`https://www.youtube.com/embed/${activeLesson.videoId}?rel=0&modestbranding=1`}
-                  title={activeLesson.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
+                {activeLesson.videoUrl ? (
+                  <video
+                    key={activeLesson.id}
+                    src={activeLesson.videoUrl}
+                    controls
+                    playsInline
+                    style={{ width: "100%", height: "100%", objectFit: "cover", background: "#000" }}
+                  />
+                ) : (
+                  <iframe
+                    key={activeLesson.id}
+                    src={`https://www.youtube.com/embed/${activeLesson.videoId}?rel=0&modestbranding=1`}
+                    title={activeLesson.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                )}
                 <div className="lesson-video-source">
                   <span style={{ color: "var(--ink-4)", fontSize: 11 }}>
-                    Educational video via YouTube · Khan Academy / Two Cents PBS
+                    {activeLesson.videoUrl
+                      ? "Original Coin Course lesson video"
+                      : "Educational video via YouTube · Khan Academy / Two Cents PBS"}
                   </span>
                 </div>
               </div>
