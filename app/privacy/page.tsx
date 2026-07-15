@@ -59,7 +59,7 @@ export default function PrivacyPage() {
             <ul>
               <li><strong>Access your data</strong>  -  email us and we will send you everything we have on file within 30 days.</li>
               <li><strong>Correct your data</strong>  -  update your name or email from your account settings.</li>
-              <li><strong>Delete your account</strong>  -  email us at <a href="mailto:hello@coin-course.com">hello@coin-course.com</a> and we will permanently delete your account and all associated data within 14 days.</li>
+              <li><strong>Delete your account</strong>  -  email us at <a href="mailto:coincourse8@gmail.com">coincourse8@gmail.com</a> and we will permanently delete your account and all associated data within 14 days.</li>
               <li><strong>Export your data</strong>  -  request a copy of your progress and quiz history in JSON format.</li>
             </ul>
             <p>If you are in the European Economic Area (EEA) or United Kingdom, you also have rights under GDPR including the right to object to processing and the right to lodge a complaint with your local supervisory authority.</p>
@@ -67,7 +67,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2>Children</h2>
-            <p>Coin Course is designed for learners aged 10 and up. We do not knowingly collect personal information from children under 13 without parental consent. If you are a parent and believe your child has created an account without your consent, contact us at <a href="mailto:hello@coin-course.com">hello@coin-course.com</a> and we will delete the account promptly.</p>
+            <p>Coin Course is designed for learners aged 10 and up. We do not knowingly collect personal information from children under 13 without parental consent. If you are a parent and believe your child has created an account without your consent, contact us at <a href="mailto:coincourse8@gmail.com">coincourse8@gmail.com</a> and we will delete the account promptly.</p>
           </section>
 
           <section>
@@ -81,7 +81,7 @@ export default function PrivacyPage() {
             <p>
               <strong>Coin Course</strong><br />
               A free financial literacy project project<br />
-              <a href="mailto:hello@coin-course.com">hello@coin-course.com</a>
+              <a href="mailto:coincourse8@gmail.com">coincourse8@gmail.com</a>
             </p>
           </section>
 
@@ -111,7 +111,7 @@ export default function PrivacyPage() {
           <div>
             <h5>Help</h5>
             <div className="footer-links">
-              <Link href="/#faq">FAQ</Link><a href="mailto:hello@coin-course.com">Contact</a>
+              <Link href="/#faq">FAQ</Link><a href="mailto:coincourse8@gmail.com">Contact</a>
               <Link href="/privacy">Privacy</Link>
             </div>
           </div>
