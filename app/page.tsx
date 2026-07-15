@@ -24,7 +24,7 @@ export default function CashCoursePage() {
       (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible") }),
       { threshold: 0.08 }
     )
-    document.querySelectorAll(".reveal, .modules").forEach(el => io.observe(el))
+    document.querySelectorAll(".reveal, .modules, .stagger").forEach(el => io.observe(el))
     return () => io.disconnect()
   }, [])
 
@@ -394,7 +394,7 @@ export default function CashCoursePage() {
           <p className="section-sub">We do not dumb things down. We just explain them well. The same modules work whether you are seven or fifty-one. Different starting points, same destination.</p>
         </div>
 
-        <div className="learners reveal">
+        <div className="learners stagger">
           <div className="learner">
             <span className="learner-age">Ages 7 to 14</span>
             <svg className="learner-portrait" viewBox="0 0 88 88" fill="none">
@@ -467,7 +467,7 @@ export default function CashCoursePage() {
         </div>
 
         {reviews.length > 0 && (
-          <div className="reviews-grid">
+          <div className="reviews-grid stagger">
             {reviews.map(r => (
               <div key={r.id} className="review-card">
                 <div className="review-stars">
@@ -612,7 +612,7 @@ export default function CashCoursePage() {
           <p className="section-sub">Everything you need to know before you start. If something is still unclear, reach out at <a href="mailto:hello@coin-course.com" style={{ color: 'var(--gold)', textDecoration: 'none' }}>hello@coin-course.com</a>.</p>
         </div>
 
-        <div className="faq-list reveal">
+        <div className="faq-list stagger">
           <div className="faq-item">
             <div className="faq-q">Is Coin Course really free?</div>
             <div className="faq-a">Yes, completely. No credit card, no free trial, no upsell. Every module, quiz, and downloadable note is free forever. We are funded so you do not have to be.</div>
