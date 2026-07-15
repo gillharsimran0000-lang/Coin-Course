@@ -2,13 +2,33 @@
 
 // Frontend  -  Homepage
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import Link from "next/link"
 import NavBar from "@/components/NavBar"
 import TowerIcon from "./game/TowerIcon"
 import { getReviews, submitReview, type Review } from "@/lib/reviews"
+import { modules } from "@/lib/modules"
+import { useAuth } from "@/app/providers"
+import { loadModuleProgress } from "@/lib/progress"
+
+function statsFor(moduleId: number) {
+  const mod = modules.find(m => m.id === moduleId)!
+  return { min: mod.duration, quiz: mod.quizCount }
+}
+
+function formatTime(seconds: number) {
+  const s = Math.max(0, Math.round(seconds))
+  const m = Math.floor(s / 60)
+  const rem = s % 60
+  return `${m}:${rem.toString().padStart(2, "0")}`
+}
 
 export default function CashCoursePage() {
+  const { user } = useAuth()
+  const previewLesson = modules[0].lessons[0]
+  const [previewDuration, setPreviewDuration] = useState(60)
+  const [previewProgress, setPreviewProgress] = useState(0)
+  const heroCtaRef = useRef<HTMLAnchorElement>(null)
   const [reviews, setReviews] = useState<Review[]>([])
   const [showForm, setShowForm] = useState(false)
   const [formName, setFormName] = useState("")
@@ -30,6 +50,34 @@ export default function CashCoursePage() {
 
   useEffect(() => {
     getReviews().then(setReviews)
+  }, [])
+
+  useEffect(() => {
+    if (!user) { setPreviewProgress(0); return }
+    loadModuleProgress(user.id, 1).then(records => {
+      const rec = records.find(r => r.lesson_id === previewLesson.id)
+      setPreviewProgress(rec?.watch_progress ?? 0)
+    })
+  }, [user])
+
+  useEffect(() => {
+    const el = heroCtaRef.current
+    if (!el || !window.matchMedia("(pointer: fine)").matches) return
+    function onMove(e: MouseEvent) {
+      const r = el!.getBoundingClientRect()
+      const x = (e.clientX - r.left - r.width / 2) * 0.25
+      const y = (e.clientY - r.top - r.height / 2) * 0.25
+      el!.style.transform = `translate(${x}px, ${y}px)`
+    }
+    function onLeave() {
+      el!.style.transform = ""
+    }
+    el.addEventListener("mousemove", onMove)
+    el.addEventListener("mouseleave", onLeave)
+    return () => {
+      el.removeEventListener("mousemove", onMove)
+      el.removeEventListener("mouseleave", onLeave)
+    }
   }, [])
 
   async function handleReviewSubmit(e: React.FormEvent) {
@@ -99,7 +147,7 @@ export default function CashCoursePage() {
               Eight short modules covering everything from your first allowance to your first 401(k). Watch a video, take a quiz, save the notes, track your progress. <b>Built for learners 10 to 100.</b> Free, forever.
             </p>
             <div className="hero-cta">
-              <Link href="/modules/1" className="btn btn-primary btn-lg">
+              <Link href="/modules/1" className="btn btn-primary btn-lg magnetic" ref={heroCtaRef}>
                 Start with Module 1
                 <svg className="btn-arrow" viewBox="0 0 18 18" fill="none">
                   <path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
@@ -217,7 +265,7 @@ export default function CashCoursePage() {
               <h3>Money Basics</h3>
               <p>What money actually is, where it comes from, and why prices change. The foundation everything else stands on.</p>
               <div className="module-foot">
-                <div className="bits"><span>22 MIN</span><span>8 QUIZ</span></div>
+                <div className="bits"><span>{statsFor(1).min} MIN</span><span>{statsFor(1).quiz} QUIZ</span></div>
                 <div className="arrow">→</div>
               </div>
             </Link>
@@ -227,7 +275,7 @@ export default function CashCoursePage() {
               <h3>Saving</h3>
               <p>Pay yourself first. Build an emergency fund, set goal-based savings buckets, and beat lifestyle creep before it starts.</p>
               <div className="module-foot">
-                <div className="bits"><span>24 MIN</span><span>10 QUIZ</span></div>
+                <div className="bits"><span>{statsFor(2).min} MIN</span><span>{statsFor(2).quiz} QUIZ</span></div>
                 <div className="arrow">→</div>
               </div>
             </Link>
@@ -237,7 +285,7 @@ export default function CashCoursePage() {
               <h3>Credit &amp; Debt</h3>
               <p>How credit scores really work, when debt helps you, when it eats you, and how to climb out fast if you&apos;re already in.</p>
               <div className="module-foot">
-                <div className="bits"><span>28 MIN</span><span>12 QUIZ</span></div>
+                <div className="bits"><span>{statsFor(3).min} MIN</span><span>{statsFor(3).quiz} QUIZ</span></div>
                 <div className="arrow">→</div>
               </div>
             </Link>
@@ -247,7 +295,7 @@ export default function CashCoursePage() {
               <h3>Banking &amp; Income</h3>
               <p>Checking versus savings, direct deposit, taxes on your paycheck, and how to actually read a real bank statement.</p>
               <div className="module-foot">
-                <div className="bits"><span>25 MIN</span><span>9 QUIZ</span></div>
+                <div className="bits"><span>{statsFor(4).min} MIN</span><span>{statsFor(4).quiz} QUIZ</span></div>
                 <div className="arrow">→</div>
               </div>
             </Link>
@@ -259,7 +307,7 @@ export default function CashCoursePage() {
               <h3>Investing</h3>
               <p>Compound growth, index funds, risk versus return. Explained with napkin math, not jargon and not hot takes.</p>
               <div className="module-foot">
-                <div className="bits"><span>32 MIN</span><span>14 QUIZ</span></div>
+                <div className="bits"><span>{statsFor(5).min} MIN</span><span>{statsFor(5).quiz} QUIZ</span></div>
                 <div className="arrow">→</div>
               </div>
             </Link>
@@ -269,7 +317,7 @@ export default function CashCoursePage() {
               <h3>Insurance</h3>
               <p>Health, auto, renters, life. What you actually need at each life stage, and what is a costly upsell in disguise.</p>
               <div className="module-foot">
-                <div className="bits"><span>26 MIN</span><span>10 QUIZ</span></div>
+                <div className="bits"><span>{statsFor(6).min} MIN</span><span>{statsFor(6).quiz} QUIZ</span></div>
                 <div className="arrow">→</div>
               </div>
             </Link>
@@ -279,7 +327,7 @@ export default function CashCoursePage() {
               <h3>Big Decisions</h3>
               <p>Renting versus buying, lease versus purchase, the true cost of college. Frameworks for the choices that move the needle.</p>
               <div className="module-foot">
-                <div className="bits"><span>30 MIN</span><span>11 QUIZ</span></div>
+                <div className="bits"><span>{statsFor(7).min} MIN</span><span>{statsFor(7).quiz} QUIZ</span></div>
                 <div className="arrow">→</div>
               </div>
             </Link>
@@ -289,7 +337,7 @@ export default function CashCoursePage() {
               <h3>Long-Term Wealth</h3>
               <p>Retirement accounts, real estate, building generational stability. The endgame, demystified and made boring on purpose.</p>
               <div className="module-foot">
-                <div className="bits"><span>34 MIN</span><span>15 QUIZ</span></div>
+                <div className="bits"><span>{statsFor(8).min} MIN</span><span>{statsFor(8).quiz} QUIZ</span></div>
                 <div className="arrow">→</div>
               </div>
             </Link>
@@ -357,27 +405,38 @@ export default function CashCoursePage() {
           </div>
 
           <div className="preview">
+            <video
+              src={previewLesson.videoUrl}
+              preload="metadata"
+              muted
+              playsInline
+              style={{ display: "none" }}
+              onLoadedMetadata={e => {
+                const d = e.currentTarget.duration
+                if (isFinite(d) && d > 0) setPreviewDuration(d)
+              }}
+            />
             <div className="preview-video">
               <span className="preview-tag">
-                <span className="live-dot" />Now playing
+                <span className="live-dot" />Real lesson
               </span>
               <Link href="/modules/1" className="play-btn">
                 <svg width="24" height="24" viewBox="0 0 24 24" style={{ marginLeft: '4px' }}>
                   <path d="M6 4 L20 12 L6 20 Z" fill="#0c0a07" />
                 </svg>
               </Link>
-              <span className="preview-time">12:34 / 22:08</span>
+              <span className="preview-time">{formatTime((previewProgress / 100) * previewDuration)} / {formatTime(previewDuration)}</span>
             </div>
             <div className="preview-body">
-              <h3>What is money, really?</h3>
+              <h3>{previewLesson.title}</h3>
               <div className="meta">
-                <span>Module 01 · Lesson 2</span>
-                <span>10 min</span>
+                <span>Module 01 · Lesson {previewLesson.id}</span>
+                <span>{formatTime(previewDuration)}</span>
               </div>
-              <div className="progress-bar"><div /></div>
+              <div className="progress-bar"><div style={{ width: `${previewProgress}%` }} /></div>
               <div className="preview-foot">
-                <span>PROGRESS TRACKED</span>
-                <span>PICK UP WHERE YOU LEFT OFF →</span>
+                <span>{user ? "PROGRESS TRACKED" : "SIGN IN TO TRACK PROGRESS"}</span>
+                <span>{previewProgress > 0 ? "PICK UP WHERE YOU LEFT OFF →" : "START HERE →"}</span>
               </div>
             </div>
           </div>

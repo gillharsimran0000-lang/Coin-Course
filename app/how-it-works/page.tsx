@@ -1,5 +1,18 @@
+"use client"
+
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import NavBar from "@/components/NavBar"
+import { modules } from "@/lib/modules"
+import { useAuth } from "@/app/providers"
+import { loadModuleProgress } from "@/lib/progress"
+
+function formatTime(seconds: number) {
+  const s = Math.max(0, Math.round(seconds))
+  const m = Math.floor(s / 60)
+  const rem = s % 60
+  return `${m}:${rem.toString().padStart(2, "0")}`
+}
 
 const STEPS = [
   {
@@ -25,6 +38,19 @@ const STEPS = [
 ]
 
 export default function HowItWorksPage() {
+  const { user } = useAuth()
+  const previewLesson = modules[0].lessons[0]
+  const [previewDuration, setPreviewDuration] = useState(60)
+  const [previewProgress, setPreviewProgress] = useState(0)
+
+  useEffect(() => {
+    if (!user) { setPreviewProgress(0); return }
+    loadModuleProgress(user.id, 1).then(records => {
+      const rec = records.find(r => r.lesson_id === previewLesson.id)
+      setPreviewProgress(rec?.watch_progress ?? 0)
+    })
+  }, [user])
+
   return (
     <div style={{ minHeight: "100vh" }}>
       <NavBar />
@@ -50,27 +76,38 @@ export default function HowItWorksPage() {
           </div>
 
           <div className="preview">
+            <video
+              src={previewLesson.videoUrl}
+              preload="metadata"
+              muted
+              playsInline
+              style={{ display: "none" }}
+              onLoadedMetadata={e => {
+                const d = e.currentTarget.duration
+                if (isFinite(d) && d > 0) setPreviewDuration(d)
+              }}
+            />
             <div className="preview-video">
               <span className="preview-tag">
-                <span className="live-dot" />Now playing
+                <span className="live-dot" />Real lesson
               </span>
               <Link href="/modules/1" className="play-btn">
                 <svg width="24" height="24" viewBox="0 0 24 24" style={{ marginLeft: "4px" }}>
                   <path d="M6 4 L20 12 L6 20 Z" fill="#0c0a07" />
                 </svg>
               </Link>
-              <span className="preview-time">12:34 / 22:08</span>
+              <span className="preview-time">{formatTime((previewProgress / 100) * previewDuration)} / {formatTime(previewDuration)}</span>
             </div>
             <div className="preview-body">
-              <h3>What is money, really?</h3>
+              <h3>{previewLesson.title}</h3>
               <div className="meta">
-                <span>Module 01 · Lesson 2</span>
-                <span>10 min</span>
+                <span>Module 01 · Lesson {previewLesson.id}</span>
+                <span>{formatTime(previewDuration)}</span>
               </div>
-              <div className="progress-bar"><div /></div>
+              <div className="progress-bar"><div style={{ width: `${previewProgress}%` }} /></div>
               <div className="preview-foot">
-                <span>PROGRESS TRACKED</span>
-                <span>PICK UP WHERE YOU LEFT OFF →</span>
+                <span>{user ? "PROGRESS TRACKED" : "SIGN IN TO TRACK PROGRESS"}</span>
+                <span>{previewProgress > 0 ? "PICK UP WHERE YOU LEFT OFF →" : "START HERE →"}</span>
               </div>
             </div>
           </div>
