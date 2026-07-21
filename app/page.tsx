@@ -46,7 +46,7 @@ export default function CashCoursePage() {
     )
     document.querySelectorAll(".reveal, .modules, .stagger").forEach(el => io.observe(el))
     return () => io.disconnect()
-  }, [])
+  }, [reviews])
 
   useEffect(() => {
     getReviews().then(setReviews)
