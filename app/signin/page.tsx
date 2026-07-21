@@ -151,7 +151,7 @@ export default function SignInPage() {
           <div className="auth-divider"><span>or use email</span></div>
 
           <form onSubmit={handleSubmit} className="auth-form" noValidate>
-            {mode === "signup" && (
+            <div className={`auth-field-wrap${mode === "signup" ? " open" : ""}`}>
               <div className="auth-field">
                 <label htmlFor="name">Full name</label>
                 <input
@@ -162,10 +162,11 @@ export default function SignInPage() {
                   onChange={e => setName(e.target.value)}
                   autoComplete="name"
                   className={errors.name ? "input-error" : ""}
+                  tabIndex={mode === "signup" ? 0 : -1}
                 />
                 {errors.name && <span className="auth-field-error">{errors.name}</span>}
               </div>
-            )}
+            </div>
             <div className="auth-field">
               <label htmlFor="email">Email address</label>
               <input

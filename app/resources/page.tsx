@@ -106,7 +106,7 @@ function BudgetCalculator() {
         </div>
       </div>
       {num > 0 && (
-        <div className="calc-results">
+        <div className="calc-results calc-results-in">
           <div className="calc-bar">
             <div className="calc-bar-seg" style={{ width: "50%", background: "var(--m4)" }} />
             <div className="calc-bar-seg" style={{ width: "30%", background: "var(--m5)" }} />
@@ -176,9 +176,9 @@ export default function ResourcesPage() {
                   <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
-              {openGloss === g.term && (
+              <div className={`gloss-def-wrap${openGloss === g.term ? " open" : ""}`}>
                 <p className="gloss-def">{g.def}</p>
-              )}
+              </div>
             </div>
           ))}
         </div>

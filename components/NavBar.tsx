@@ -103,22 +103,21 @@ export default function NavBar() {
               >
                 {initial}
               </button>
-              {menuOpen && (
-                <div className="nav-dropdown">
-                  <div className="nav-dropdown-name">{user.name}</div>
-                  <div className="nav-dropdown-email">{user.email}</div>
-                  <div className="nav-dropdown-rule" />
-                  <Link href="/modules/1" className="nav-dropdown-item" onClick={() => setMenuOpen(false)}>
-                    My progress
-                  </Link>
-                  <button
-                    className="nav-dropdown-item signout"
-                    onClick={() => { signOut(); setMenuOpen(false) }}
-                  >
-                    Sign out
-                  </button>
-                </div>
-              )}
+              <div className={menuOpen ? "nav-dropdown open" : "nav-dropdown"} aria-hidden={!menuOpen}>
+                <div className="nav-dropdown-name">{user.name}</div>
+                <div className="nav-dropdown-email">{user.email}</div>
+                <div className="nav-dropdown-rule" />
+                <Link href="/modules/1" className="nav-dropdown-item" onClick={() => setMenuOpen(false)} tabIndex={menuOpen ? 0 : -1}>
+                  My progress
+                </Link>
+                <button
+                  className="nav-dropdown-item signout"
+                  onClick={() => { signOut(); setMenuOpen(false) }}
+                  tabIndex={menuOpen ? 0 : -1}
+                >
+                  Sign out
+                </button>
+              </div>
             </div>
           ) : (
             <Link href="/signin" className="btn">Sign in</Link>
