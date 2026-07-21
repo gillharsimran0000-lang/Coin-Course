@@ -112,7 +112,7 @@ export default function PrivacyPage() {
             <h5>Help</h5>
             <div className="footer-links">
               <Link href="/#faq">FAQ</Link><a href="mailto:coincourse8@gmail.com">Contact</a>
-              <Link href="/privacy">Privacy</Link>
+              <Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link>
             </div>
           </div>
         </div>

@@ -24,9 +24,11 @@ export async function submitReview(
   name: string,
   rating: number,
   body: string
-): Promise<{ error: string | null }> {
-  const { error } = await supabase
+): Promise<{ review: Review | null; error: string | null }> {
+  const { data, error } = await supabase
     .from("reviews")
     .insert({ name, rating, body })
-  return { error: error?.message ?? null }
+    .select("id, name, rating, body, created_at")
+    .single()
+  return { review: data ?? null, error: error?.message ?? null }
 }

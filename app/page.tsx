@@ -85,13 +85,15 @@ export default function CashCoursePage() {
     if (!formRating || !formName.trim() || !formBody.trim()) return
     setFormSubmitting(true)
     setFormError("")
-    const { error } = await submitReview(formName.trim(), formRating, formBody.trim())
+    const { review, error } = await submitReview(formName.trim(), formRating, formBody.trim())
     setFormSubmitting(false)
     if (error) {
       setFormError("Something went wrong. Please try again.")
     } else {
       setFormDone(true)
-      if (formRating >= 4) getReviews().then(setReviews)
+      if (review && review.rating >= 4) {
+        setReviews((prev) => [review, ...prev].slice(0, 9))
+      }
     }
   }
 
@@ -724,6 +726,7 @@ export default function CashCoursePage() {
               <Link href="/#faq">FAQ</Link>
               <a href="mailto:hello@coin-course.com">Contact</a>
               <Link href="/privacy">Privacy</Link>
+              <Link href="/terms">Terms</Link>
             </div>
           </div>
         </div>

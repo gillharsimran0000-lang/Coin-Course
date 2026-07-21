@@ -18,8 +18,8 @@ const DIFF_INFO: { key: Difficulty; label: string; desc: string }[] = [
 ]
 
 const MODE_INFO: { key: GameMode; label: string; desc: string }[] = [
-  { key: "story", label: "📖 Story Mode", desc: `Save Coinville! ${STORY_WAVES} chapters with a tale before every wave.` },
-  { key: "endless", label: "♾️ Endless Waves", desc: "No ending. Survive as many waves as you can and chase a high score." },
+  { key: "story", label: "Story Mode", desc: `Save Coinville! ${STORY_WAVES} chapters with a tale before every wave.` },
+  { key: "endless", label: "Endless Waves", desc: "No ending. Survive as many waves as you can and chase a high score." },
 ]
 
 type Device = "mobile" | "desktop"
@@ -98,7 +98,9 @@ export default function GamePage() {
           <div className="md-chip md-money"><span className="md-chip-k">Money</span> ${snap.money}</div>
           <div className="md-chip md-lives" title={`${snap.lives} lives left`}>
             {Array.from({ length: 5 }, (_, i) => (
-              <span key={i} className={`md-heart ${i < snap.lives ? "" : "gone"}`}>♥</span>
+              <svg key={i} className={`md-heart ${i < snap.lives ? "" : "gone"}`} width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 21s-6.7-4.35-9.5-8.4C.6 9.9 1.4 6.4 4.4 5c2.2-1 4.6-.2 5.9 1.6l1.7 2.3 1.7-2.3C15 4.8 17.4 4 19.6 5c3 1.4 3.8 4.9 1.9 7.6C18.7 16.65 12 21 12 21z"/>
+              </svg>
             ))}
           </div>
           <div className="md-chip"><span className="md-chip-k">Wave</span> {snap.wave}</div>
