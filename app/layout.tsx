@@ -7,8 +7,21 @@ import { Analytics } from "@vercel/analytics/react";
 import DeviceGate from "@/components/DeviceGate";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://coin-course.com"),
   title: "Coin Course · Free financial literacy for every age",
   description: "Eight short modules covering everything from your first allowance to your first 401(k). Free, forever.",
+  openGraph: {
+    title: "Coin Course · Free financial literacy for every age",
+    description: "Eight short modules covering everything from your first allowance to your first 401(k). Free, forever.",
+    url: "https://coin-course.com",
+    siteName: "Coin Course",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Coin Course · Free financial literacy for every age",
+    description: "Eight short modules covering everything from your first allowance to your first 401(k). Free, forever.",
+  },
 };
 
 export default function RootLayout({
