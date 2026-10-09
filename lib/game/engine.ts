@@ -36,7 +36,15 @@ export interface Snapshot {
   best: number
   prepTime: number
   selectedTower: TowerType | null
-  inspected: { name: string; type: TowerType; refund: number } | null
+  inspected: {
+    name: string
+    type: TowerType
+    refund: number
+    level: number
+    maxLevel: number
+    stats: string
+    upgrade: { cost: number; stats: string } | null // null once maxed out
+  } | null
   difficulty: Difficulty
   mode: GameMode
   story: { chapter: number; title: string; text: string } | null
@@ -93,6 +101,39 @@ export const TOWERS: Record<TowerType, TowerDef> = {
 }
 
 const SELL_RATIO = 0.7
+
+// ── Upgrades ─────────────────────────────────────────────────────────────
+// Every defender can be upgraded twice. Each level boosts damage, range, and its special ability.
+export const MAX_LEVEL = 3
+const UPGRADE_COST = [0.6, 0.9] // share of the base cost to reach level 2, then level 3
+const DMG_MUL = [1, 1.5, 2.1]
+const RANGE_MUL = [1, 1.1, 1.2]
+
+const BASE_DAMAGE: Record<TowerType, number> = {
+  emergencyFund: 16, budgetPlan: 0, insurance: 34, investment: 23, incomeBoost: 0,
+  frugalFrog: 14, creditCat: 70, compoundCrab: 10,
+}
+
+function towerStats(type: TowerType, level: number) {
+  const i = level - 1
+  return {
+    damage: Math.round(BASE_DAMAGE[type] * DMG_MUL[i]),
+    range: Math.round(TOWERS[type].range * RANGE_MUL[i]),
+    slow: [0.5, 0.4, 0.3][i],      // Budget Beaver speed multiplier
+    income: [10, 16, 24][i],       // Hustle Hen $ per second
+    splash: [55, 68, 82][i],       // Frugal Frog splash radius
+    killBonus: [10, 15, 20][i],    // Investing Iguana $ per defeat
+  }
+}
+
+function upgradeCost(type: TowerType, level: number): number {
+  return Math.round((TOWERS[type].cost * UPGRADE_COST[level - 1]) / 5) * 5
+}
+
+// compound interest: the crab's damage grows the longer it's been placed
+function crabDamage(level: number, age: number): number {
+  return Math.round((BASE_DAMAGE.compoundCrab + Math.min(50, age * 1.2)) * DMG_MUL[level - 1])
+}
 
 // ── Threats ──────────────────────────────────────────────────────────────
 type ThreatType =
@@ -305,7 +346,9 @@ interface Tower {
   angle: number
   age: number // for the pop-in animation
   recoil: number
-  pulse: number // income payout ring
+  pulse: number // income payout / upgrade ring
+  level: number
+  spent: number // total paid (base + upgrades), used for the sell refund
 }
 
 interface Projectile {
@@ -313,7 +356,7 @@ interface Projectile {
   y: number
   target: Threat | null
   damage: number
-  fromInvestment: boolean
+  killBonus: number // extra $ on defeat (Investing Iguana), 0 = none
   splash: number // area-damage radius (0 = single target)
   color: string
   life: number
@@ -497,9 +540,10 @@ export class MoneyDefense {
     if (moved > 8) return
     if (this.state !== "prep" && this.state !== "wave") return
     const w = this.toWorld(e.clientX, e.clientY)
-    if (this.selectedTower) { this.tryPlace(w.x, w.y); return }
-    // no shop selection → inspect an existing tower (click again / elsewhere to close)
     const idx = this.towers.findIndex((t) => Math.hypot(t.x - w.x, t.y - w.y) < 30)
+    if (this.selectedTower && idx < 0) { this.tryPlace(w.x, w.y); return }
+    // clicked an existing tower → inspect it to upgrade or sell (click again / elsewhere to close)
+    if (idx >= 0) this.selectedTower = null
     this.inspected = idx >= 0 && idx !== this.inspected ? idx : null
     this.emit()
   }
@@ -525,7 +569,7 @@ export class MoneyDefense {
     if (this.money < def.cost) { this.flash("Not enough money"); return }
     if (!this.canPlace(x, y)) { this.flash("Can't build there. Keep off the path"); return }
     this.money -= def.cost
-    this.towers.push({ type: this.selectedTower, x, y, cooldown: 0, angle: 0, age: 0, recoil: 0, pulse: 0 })
+    this.towers.push({ type: this.selectedTower, x, y, cooldown: 0, angle: 0, age: 0, recoil: 0, pulse: 0, level: 1, spent: def.cost })
     this.floaters.push({ x, y: y - 30, text: "-$" + def.cost, color: "#ff8a6b", life: 1 })
     this.burst(x, y, def.color, 8, "puff")
     this.emit()
@@ -561,12 +605,33 @@ export class MoneyDefense {
     if (this.inspected === null) return
     const t = this.towers[this.inspected]
     if (!t) { this.inspected = null; this.emit(); return }
-    const refund = Math.round(TOWERS[t.type].cost * SELL_RATIO)
+    const refund = Math.round(t.spent * SELL_RATIO)
     this.money += refund
     this.towers.splice(this.inspected, 1)
     this.inspected = null
     this.floaters.push({ x: t.x, y: t.y - 30, text: "+$" + refund, color: "#ffce3a", life: 1 })
     this.burst(t.x, t.y, "#ffce3a", 10, "coin")
+    this.emit()
+  }
+
+  upgradeInspected() {
+    if (this.inspected === null) return
+    const t = this.towers[this.inspected]
+    if (!t || t.level >= MAX_LEVEL) return
+    const cost = upgradeCost(t.type, t.level)
+    if (this.money < cost) { this.flash("Not enough money to upgrade"); return }
+    this.money -= cost
+    t.spent += cost
+    t.level++
+    t.pulse = 1
+    this.floaters.push({ x: t.x, y: t.y - 30, text: "Level " + t.level + "!", color: "#ffe08a", life: 1.2 })
+    this.burst(t.x, t.y, TOWERS[t.type].color, 12, "spark")
+    this.emit()
+  }
+
+  closeInspect() {
+    if (this.inspected === null) return
+    this.inspected = null
     this.emit()
   }
 
@@ -650,7 +715,7 @@ export class MoneyDefense {
     const incomeTowers = this.towers.filter((t) => t.type === "incomeBoost")
     if (this.incomeAcc >= 1) {
       if (incomeTowers.length) {
-        const gain = 10 * incomeTowers.length
+        const gain = incomeTowers.reduce((sum, it) => sum + towerStats(it.type, it.level).income, 0)
         this.money += gain
         const t = incomeTowers[0]
         this.floaters.push({ x: t.x, y: t.y - 28, text: "+$" + gain, color: "#ffce3a", life: 1 })
@@ -681,8 +746,9 @@ export class MoneyDefense {
     for (const th of this.threats) th.slow = 1
     for (const t of this.towers) {
       if (t.type !== "budgetPlan") continue
+      const aura = towerStats(t.type, t.level)
       for (const th of this.threats) {
-        if (Math.hypot(th.x - t.x, th.y - t.y) <= TOWERS.budgetPlan.range) th.slow = Math.min(th.slow, 0.5)
+        if (Math.hypot(th.x - t.x, th.y - t.y) <= aura.range) th.slow = Math.min(th.slow, aura.slow)
       }
     }
 
@@ -705,15 +771,15 @@ export class MoneyDefense {
       t.recoil = Math.max(0, t.recoil - dt * 5)
       t.pulse = Math.max(0, t.pulse - dt * 1.4)
       if (t.type === "budgetPlan" || t.type === "incomeBoost") continue
-      const def = TOWERS[t.type]
-      if (def.range <= 0) continue
+      const range = towerStats(t.type, t.level).range
+      if (range <= 0) continue
       t.cooldown -= dt
       // aim at furthest-along threat in range
       let target: Threat | null = null
       let bestD = -1
       for (const th of this.threats) {
         if (!th.alive) continue
-        if (Math.hypot(th.x - t.x, th.y - t.y) > def.range) continue
+        if (Math.hypot(th.x - t.x, th.y - t.y) > range) continue
         if (th.d > bestD) { bestD = th.d; target = th }
       }
       if (target) {
@@ -742,11 +808,11 @@ export class MoneyDefense {
       p.trail.push({ x: p.x, y: p.y })
       if (p.trail.length > 5) p.trail.shift()
       if (dist <= step + (p.target!.def.radius)) {
-        this.damage(p.target!, p.damage, p.fromInvestment)
+        this.damage(p.target!, p.damage, p.killBonus)
         if (p.splash > 0) {
           for (const th of this.threats) {
             if (th === p.target || !th.alive) continue
-            if (Math.hypot(th.x - p.x, th.y - p.y) <= p.splash) this.damage(th, p.damage, false)
+            if (Math.hypot(th.x - p.x, th.y - p.y) <= p.splash) this.damage(th, p.damage)
           }
           this.burst(p.x, p.y, p.color, 8, "puff")
         }
@@ -799,22 +865,17 @@ export class MoneyDefense {
   }
 
   private fire(t: Tower, target: Threat) {
-    const dmgMap: Record<TowerType, number> = {
-      emergencyFund: 16, budgetPlan: 0, insurance: 34, investment: 23, incomeBoost: 0,
-      frugalFrog: 14, creditCat: 70, compoundCrab: 10,
-    }
-    let damage = dmgMap[t.type]
-    // compound interest: the crab's damage grows the longer it's been placed
-    if (t.type === "compoundCrab") damage = Math.round(10 + Math.min(50, t.age * 1.2))
+    const stats = towerStats(t.type, t.level)
+    const damage = t.type === "compoundCrab" ? crabDamage(t.level, t.age) : stats.damage
     this.projectiles.push({
       x: t.x, y: t.y, target, damage,
-      fromInvestment: t.type === "investment",
-      splash: t.type === "frugalFrog" ? 55 : 0,
+      killBonus: t.type === "investment" ? stats.killBonus : 0,
+      splash: t.type === "frugalFrog" ? stats.splash : 0,
       color: TOWERS[t.type].color, life: 1.2, trail: [],
     })
   }
 
-  private damage(th: Threat, dmg: number, fromInvestment: boolean) {
+  private damage(th: Threat, dmg: number, killBonus = 0) {
     if (!th.alive) return
     th.hp -= dmg
     th.flash = 1
@@ -822,10 +883,10 @@ export class MoneyDefense {
       th.alive = false
       const isBoss = th.def.type === "inflation"
       // Small kill reward to keep gameplay flowing; main money comes from quiz answers
-      const reward = isBoss ? 30 : fromInvestment ? 10 : 5
+      const reward = isBoss ? 30 : killBonus || 5
       this.money += reward
       this.score += isBoss ? 500 : 50
-      this.floaters.push({ x: th.x, y: th.y - 20, text: "+$" + reward, color: fromInvestment ? "#6dd497" : "#ffce3a", life: 0.8 })
+      this.floaters.push({ x: th.x, y: th.y - 20, text: "+$" + reward, color: killBonus ? "#6dd497" : "#ffce3a", life: 0.8 })
       this.burst(th.x, th.y, "#ffce3a", isBoss ? 24 : 8, "coin")
       this.burst(th.x, th.y, th.def.color, isBoss ? 16 : 6, "puff")
       if (isBoss) { this.shake = 0.8; this.flash("Inflation Dragon defeated!") }
@@ -1081,14 +1142,15 @@ export class MoneyDefense {
       const t = this.towers[i]
       const def = TOWERS[t.type]
       const inspected = i === this.inspected
+      const range = towerStats(t.type, t.level).range
       // range ring (faint; bright when inspected)
-      if (def.range > 0) {
+      if (range > 0) {
         ctx.fillStyle = inspected ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.04)"
-        ctx.beginPath(); ctx.arc(t.x, t.y, def.range, 0, Math.PI * 2); ctx.fill()
+        ctx.beginPath(); ctx.arc(t.x, t.y, range, 0, Math.PI * 2); ctx.fill()
         if (inspected) {
           ctx.strokeStyle = def.color; ctx.lineWidth = 2
           ctx.setLineDash([8, 8]); ctx.lineDashOffset = -this.time * 16
-          ctx.beginPath(); ctx.arc(t.x, t.y, def.range, 0, Math.PI * 2); ctx.stroke()
+          ctx.beginPath(); ctx.arc(t.x, t.y, range, 0, Math.PI * 2); ctx.stroke()
           ctx.setLineDash([]); ctx.lineDashOffset = 0
         }
       }
@@ -1101,6 +1163,14 @@ export class MoneyDefense {
       const pop = Math.min(1, t.age / 0.25)
       const scale = 0.6 + 0.4 * (1 - Math.pow(1 - pop, 3)) // ease-out pop-in
       this.drawTowerIcon(ctx, t.type, t.x, t.y, t.angle, scale, t.recoil)
+      // upgrade pips under the platform
+      if (t.level > 1) {
+        ctx.fillStyle = "#ffce3a"; ctx.strokeStyle = "#1c1208"; ctx.lineWidth = 2
+        for (let k = 0; k < t.level; k++) {
+          ctx.beginPath(); ctx.arc(t.x + (k - (t.level - 1) / 2) * 11, t.y + 29, 4, 0, Math.PI * 2)
+          ctx.fill(); ctx.stroke()
+        }
+      }
       if (inspected) {
         ctx.strokeStyle = "#fff"; ctx.lineWidth = 2.5
         ctx.beginPath(); ctx.arc(t.x, t.y, 31, 0, Math.PI * 2); ctx.stroke()
@@ -1248,6 +1318,19 @@ export class MoneyDefense {
     ctx.fillStyle = color; ctx.fillText(text, x, y)
   }
 
+  // one-line stat summary for the inspect panel
+  private describe(t: Tower, level: number): string {
+    const s = towerStats(t.type, level)
+    switch (t.type) {
+      case "budgetPlan": return `Slows ${Math.round((1 - s.slow) * 100)}% · ${s.range} range`
+      case "incomeBoost": return `+$${s.income} every second`
+      case "investment": return `${s.damage} damage · +$${s.killBonus} per defeat`
+      case "frugalFrog": return `${s.damage} splash damage · ${s.range} range`
+      case "compoundCrab": return `${crabDamage(level, t.age)} damage now · grows to ${crabDamage(level, Infinity)}`
+      default: return `${s.damage} damage · ${s.range} range`
+    }
+  }
+
   // ── emit ──
   private emit() {
     const insp = this.inspected !== null ? this.towers[this.inspected] : null
@@ -1261,7 +1344,14 @@ export class MoneyDefense {
       prepTime: Math.max(0, Math.ceil(this.prepTime)),
       selectedTower: this.selectedTower,
       inspected: insp
-        ? { name: TOWERS[insp.type].name, type: insp.type, refund: Math.round(TOWERS[insp.type].cost * SELL_RATIO) }
+        ? {
+            name: TOWERS[insp.type].name, type: insp.type, refund: Math.round(insp.spent * SELL_RATIO),
+            level: insp.level, maxLevel: MAX_LEVEL,
+            stats: this.describe(insp, insp.level),
+            upgrade: insp.level < MAX_LEVEL
+              ? { cost: upgradeCost(insp.type, insp.level), stats: this.describe(insp, insp.level + 1) }
+              : null,
+          }
         : null,
       difficulty: this.difficulty,
       mode: this.mode,

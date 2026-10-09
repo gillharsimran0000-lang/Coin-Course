@@ -3392,7 +3392,7 @@ footer { border-top: 1px solid var(--line); padding: 64px 36px 36px; margin-top:
   transition: width 0.3s ease;
 }
 
-/* sell panel */
+/* upgrade / sell panel */
 .md-sell {
   position: absolute;
   bottom: 214px;
@@ -3408,10 +3408,26 @@ footer { border-top: 1px solid var(--line); padding: 64px 36px 36px; margin-top:
   border-radius: 14px;
   padding: 8px 10px 8px 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  width: max-content;
+  max-width: 94vw;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .md-sell-icon { display: flex; }
-.md-sell-name { color: var(--ink); font-weight: 700; font-size: 14px; }
-.md-sell-btn {
+.md-sell-info { display: flex; flex-direction: column; gap: 1px; margin-right: 6px; }
+.md-sell-name { color: var(--ink); font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+.md-sell-pips { display: flex; gap: 3px; }
+.md-sell-pips i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--line-2);
+  transition: background 0.2s;
+}
+.md-sell-pips i.on { background: #ffce3a; }
+.md-sell-stats { color: var(--ink-2); font-size: 12px; font-weight: 600; }
+.md-sell-next { color: var(--ink-4); font-size: 11.5px; }
+.md-up-btn {
   background: linear-gradient(180deg, #ffd95e, #ffb020);
   color: #1a1206;
   border: none;
@@ -3419,8 +3435,21 @@ footer { border-top: 1px solid var(--line); padding: 64px 36px 36px; margin-top:
   border-radius: 10px;
   font-weight: 800;
   font-size: 13px;
+  white-space: nowrap;
 }
-.md-sell-btn:hover { filter: brightness(1.06); }
+.md-up-btn.broke { opacity: 0.5; }
+.md-sell-btn {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--line-2);
+  padding: 7px 13px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.md-up-btn:hover { filter: brightness(1.06); }
+.md-sell-btn:hover { border-color: var(--m1); }
 .md-back, .md-pause {
   text-decoration: none;
   color: var(--ink-2);
@@ -3802,7 +3831,7 @@ footer { border-top: 1px solid var(--line); padding: 64px 36px 36px; margin-top:
 .md-mobile .md-tower { min-height: 108px; }
 .md-mobile .md-chip { padding: 10px 13px; }
 .md-mobile .md-startwave { padding: 16px 34px; }
-.md-mobile .md-sell-btn { padding: 11px 16px; }
+.md-mobile .md-sell-btn, .md-mobile .md-up-btn { padding: 11px 16px; }
 .md-mobile .md-shop-tab { padding: 9px 20px; }
 .md-mobile .md-tip { pointer-events: none; }
 
@@ -3814,7 +3843,9 @@ footer { border-top: 1px solid var(--line); padding: 64px 36px 36px; margin-top:
   .md-chip { font-size: 13px; padding: 7px 11px; }
   .md-final { flex-wrap: wrap; }
   .md-startwave { bottom: 168px; }
-  .md-sell { bottom: 232px; }
+  .md-sell { bottom: 232px; gap: 8px; padding: 10px 12px; left: 3vw; right: 3vw; width: auto; transform: none; }
+  .md-sell-icon { display: none; }
+  .md-sell-info { flex-basis: 100%; margin-right: 0; align-items: center; }
   .md-waveprog { top: 96px; }
   .md-tower-key { display: none; }
 }

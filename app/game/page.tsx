@@ -65,6 +65,11 @@ export default function GamePage() {
         else g.togglePause()
       } else if (e.key === "Escape") {
         g.selectTower(null)
+        g.closeInspect()
+      } else if (e.key === "u" || e.key === "U") {
+        g.upgradeInspected()
+      } else if (e.key === "x" || e.key === "X") {
+        g.sellInspected()
       } else if (e.key === "f" || e.key === "F") {
         g.toggleFast()
       }
@@ -149,11 +154,34 @@ export default function GamePage() {
         </button>
       )}
 
-      {/* Sell panel for an inspected tower */}
+      {/* Upgrade / sell panel for an inspected tower */}
       {(state === "prep" || state === "wave") && snap?.inspected && (
         <div className="md-sell">
-          <span className="md-sell-icon"><TowerIcon type={snap.inspected.type} size={26} /></span>
-          <span className="md-sell-name">{snap.inspected.name}</span>
+          <span className="md-sell-icon"><TowerIcon type={snap.inspected.type} size={38} /></span>
+          <div className="md-sell-info">
+            <span className="md-sell-name">
+              {snap.inspected.name}
+              <span className="md-sell-pips" title={`Level ${snap.inspected.level} of ${snap.inspected.maxLevel}`}>
+                {Array.from({ length: snap.inspected.maxLevel }, (_, i) => (
+                  <i key={i} className={i < snap.inspected!.level ? "on" : ""} />
+                ))}
+              </span>
+            </span>
+            <span className="md-sell-stats">{snap.inspected.stats}</span>
+            <span className="md-sell-next">
+              {snap.inspected.upgrade
+                ? `Level ${snap.inspected.level + 1}: ${snap.inspected.upgrade.stats}`
+                : "Max level reached"}
+            </span>
+          </div>
+          {snap.inspected.upgrade && (
+            <button
+              className={`md-up-btn ${snap.money >= snap.inspected.upgrade.cost ? "" : "broke"}`}
+              onClick={() => g?.upgradeInspected()}
+            >
+              Upgrade ${snap.inspected.upgrade.cost}
+            </button>
+          )}
           <button className="md-sell-btn" onClick={() => g?.sellInspected()}>
             Sell +${snap.inspected.refund}
           </button>
@@ -204,9 +232,13 @@ export default function GamePage() {
           <div className="md-shop-hint">
             {snap.selectedTower
               ? `${mobile ? "Tap" : "Click"} the grass to place ${TOWERS[snap.selectedTower].name}. Keep off the path.`
-              : mobile
-                ? "Tap a defender, then tap the grass to place them. Tap a placed defender to sell."
-                : "Pick a defender (1–8), then click the grass to place them. Click a placed defender to sell."}
+              : snap.inspected
+                ? mobile
+                  ? "Upgrade to make this defender stronger, or sell for 70% back. Tap them again to close."
+                  : "U to upgrade, X to sell for 70% back, Esc to close."
+                : mobile
+                  ? "Tap a defender, then tap the grass to place them. Tap a placed defender to upgrade or sell."
+                  : "Pick a defender (1–8), then click the grass to place them. Click a placed defender to upgrade or sell."}
           </div>
         </div>
       )}
@@ -281,11 +313,12 @@ export default function GamePage() {
                 <li><b>Story Mode</b> tells the tale of Coinville across {STORY_WAVES} chapters. <b>Endless Waves</b> never stops. Go for the high score!</li>
                 <li><b>Starters:</b> Piggy Bank Pal attacks, Budget Beaver slows, Insurance Turtle snipes big threats, Hustle Hen earns passive income.</li>
                 <li><b>Specialists:</b> Investing Iguana pays per kill, Frugal Frog does splash damage, Credit Score Cat is a long-range sniper, Compound Crab's damage grows over time.</li>
+                <li><b>Upgrade or sell:</b> {mobile ? "tap" : "click"} a placed defender to level it up (twice, for more damage, range, or income) or sell it for 70% of what you spent.</li>
                 <li>You lose a life and money every time a threat reaches the vault. Don't let them through!</li>
                 {mobile ? (
                   <li>Controls: tap a defender to select it, then tap the grass to place it.</li>
                 ) : (
-                  <li>Shortcuts: <b>1–8</b> pick a defender, <b>Space</b> start wave / pause, <b>F</b> fast-forward, <b>Esc</b> deselect.</li>
+                  <li>Shortcuts: <b>1–8</b> pick a defender, <b>Space</b> start wave / pause, <b>F</b> fast-forward, <b>U</b> upgrade, <b>X</b> sell, <b>Esc</b> deselect.</li>
                 )}
               </ul>
             </details>
